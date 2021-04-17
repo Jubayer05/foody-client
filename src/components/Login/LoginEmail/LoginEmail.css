@@ -1,0 +1,36 @@
+.loginEmail {
+  max-width: 500px;
+  margin: auto;
+  padding: 30px;
+  margin-top: 30px;
+}
+
+.login__input {
+  width: 100%;
+  margin-top: 5px !important;
+}
+
+.login__btn {
+  outline: none !important;
+  margin-top: 10px !important;
+}
+
+.login__text {
+  margin-top: 12px;
+}
+
+.forgottenPass {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.login__link {
+  color: #ff4081;
+}
+.login__link:hover {
+  color: #ff4081;
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -1,0 +1,12 @@
+.allItem__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+  margin: 20px 0 100px 0;
+}
+
+.allItem__logo {
+  width: 80px;
+  cursor: pointer;
+  margin-bottom: 30px;
+}

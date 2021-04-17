@@ -1,0 +1,58 @@
+.shipment {
+  padding: 40px 0;
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.shipment__input {
+  width: 100%;
+  background-color: #f5f5f5;
+  border: none;
+  outline: none;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.delivery__content {
+  width: 450px;
+}
+
+.delivery__review {
+  width: 300px;
+  text-align: left;
+}
+
+.delivery__review--main {
+  margin-top: 35px;
+}
+
+.delivery__review--sub {
+  margin-bottom: 25px;
+}
+
+.delivery__details {
+  border-bottom: 1.5px solid #333;
+  padding: 10px;
+  margin-bottom: 30px;
+}
+.text-bold {
+  font-weight: 700;
+}
+
+.cart-box {
+  margin-top: 30px;
+}
+
+.cart-table {
+  width: 100%;
+}
+
+.cart__border td {
+  text-align: right;
+  padding: 8px 0;
+}
+
+.placeOrder__btn {
+  margin-top: 15px !important;
+}

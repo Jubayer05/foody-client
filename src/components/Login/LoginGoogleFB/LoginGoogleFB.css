@@ -1,0 +1,45 @@
+.or-line {
+  margin-top: 15px;
+  position: relative;
+}
+.or-line::after,
+.or-line::before {
+  content: '';
+  width: 200px;
+  height: 1.5px;
+  background-color: #bdbdbd;
+  position: absolute;
+}
+.or-line::after {
+  top: 50%;
+  left: 31%;
+}
+.or-line::before {
+  top: 50%;
+  left: 52%;
+}
+.facebook,
+.google {
+  max-width: 350px;
+  margin: auto;
+  border: 1px solid #ccc;
+  padding: 5px 7px;
+  border-radius: 50px;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20px;
+}
+.facebook-img,
+.google-img {
+  width: 40px;
+}
+.icon-font {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.facebook {
+  margin-bottom: 30px;
+}

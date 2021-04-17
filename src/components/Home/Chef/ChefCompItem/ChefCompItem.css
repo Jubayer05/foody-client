@@ -1,0 +1,65 @@
+/* Background Image */
+.chefCompItem {
+  width: 90%;
+  height: 300px;
+  background-size: 100% 100%;
+  -moz-transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+  background-position: center center;
+  outline: none;
+  text-align: left;
+}
+
+.chefCompItem:hover {
+  background-size: 125% 130%;
+  background-color: rgba(52, 73, 94, 0.75);
+  background-blend-mode: multiply;
+}
+
+/* Icon */
+.chefCompItem__icon {
+  width: 40px !important;
+  height: 40px !important;
+  padding: 8px;
+  cursor: pointer;
+  margin: 10px;
+  border-radius: 50%;
+  margin-right: auto;
+}
+
+.chefCompItem__facebook {
+  color: #ffffff;
+  background-color: #4267b2;
+  opacity: 0;
+  transition: all 0.3s 0.3s !important;
+}
+
+.chefCompItem:hover .chefCompItem__facebook {
+  opacity: 1;
+}
+
+.chefCompItem__linkedin {
+  background-color: #0077b5;
+  color: #fff;
+  opacity: 0;
+  transition: all 0.3s 0.5s !important;
+}
+
+.chefCompItem:hover .chefCompItem__linkedin {
+  opacity: 1;
+}
+
+/* Chef Name */
+.chefCompItem__name {
+  font-size: 24px;
+  color: #fff;
+  transform: translateY(210px) translateX(40px);
+  opacity: 0;
+  transition: all 0.3s 0.7s;
+}
+
+.chefCompItem:hover .chefCompItem__name {
+  opacity: 1;
+  transform: translateY(165px) translateX(40px);
+}

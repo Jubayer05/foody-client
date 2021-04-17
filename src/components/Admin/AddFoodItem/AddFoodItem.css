@@ -1,0 +1,38 @@
+input[type='file'] {
+  display: none;
+}
+
+.upload__btn {
+  border: 1px solid #01b0f1;
+  border-radius: 5px;
+  padding: 12px;
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.upload__img {
+  width: 45px;
+}
+.upload__text {
+  font-size: 16px;
+  margin-left: 20px;
+}
+
+.upload__input {
+  padding: 15px;
+}
+
+.addFoodItem {
+  margin-top: 15px !important;
+}
+
+.btn__right {
+  text-align: right;
+}
+
+.submit__btn {
+  margin-top: 15px !important;
+  background-color: #01b0f1 !important;
+  color: #fff !important;
+}

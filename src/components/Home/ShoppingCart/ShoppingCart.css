@@ -1,0 +1,14 @@
+.shoppingCart {
+  margin-top: 48px;
+  margin-bottom: 80px;
+}
+
+.shoppingCart__heading {
+  padding: 30px 0 0 0;
+}
+
+.shoppingCartItem__container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 25px;
+}
