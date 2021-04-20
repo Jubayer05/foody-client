@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import './App.css';
 import AllItem from './components/Food/AllItem/AllItem';
 import Cart from './components/Food/Cart/Cart';
@@ -12,8 +13,14 @@ import AddAdmin from './components/Admin/AddAdmin/AddAdmin';
 import OrderList from './components/Admin/OrderList/OrderList';
 import AddFoodItem from './components/Admin/AddFoodItem/AddFoodItem';
 import CustomerList from './components/Admin/CustomerList/CustomerList';
+import { getAllFoodItems } from './actions/foodItemsAction';
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(getAllFoodItems());
+  }, [dispatch]);
+
   return (
     <Router>
       <Switch>

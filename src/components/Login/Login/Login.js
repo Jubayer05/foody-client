@@ -10,7 +10,7 @@ import './Login.css';
 const Login = () => {
   const history = useHistory();
   return (
-    <div className="container pb-5">
+    <div className="container">
       <div className="text-center">
         <img
           onClick={() => history.push('/')}

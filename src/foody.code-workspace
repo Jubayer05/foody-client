@@ -5,12 +5,16 @@
     },
     {
       "path": "..\\..\\server"
-    },
-    {
-      "path": "..\\..\\..\\items-catalogue"
     }
   ],
   "settings": {
-    "cSpell.words": ["Foody", "apos", "linkedin", "useinterval"]
+    "cSpell.words": [
+      "Appbar",
+      "Foody",
+      "apos",
+      "linkedin",
+      "originalname",
+      "useinterval"
+    ]
   }
 }

@@ -58,11 +58,11 @@ const FoodDetail = () => {
               <h4 className="text-primary foodDetail__price">${price}</h4>
               <span className="foodDetail__itemNum--container">
                 <span onClick={decreaseNum} className="foodDetail__iteration">
-                  <FontAwesomeIcon className="" icon={faMinus} />
+                  <FontAwesomeIcon icon={faMinus} />
                 </span>
                 <span className="foodDetail__itemNum">{itemNum}</span>
                 <span onClick={increaseNum} className="foodDetail__iteration">
-                  <FontAwesomeIcon className="" icon={faPlus} />
+                  <FontAwesomeIcon icon={faPlus} />
                 </span>
               </span>
             </Box>

@@ -1,41 +1,47 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  IconButton,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@material-ui/core';
+import { IconButton, TableCell, TableRow } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import AttachMoneyIcon from '@material-ui/icons/AttachMoney';
+import { useDispatch } from 'react-redux';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import './CartItem.css';
-import image1 from '../../../../image/chefs/Chef-1.jpg';
+import {
+  decQuantity,
+  deleteItem,
+  incQuantity,
+} from '../../../../actions/foodCartAction';
 
 const CartItem = ({ item }) => {
   const [quantity, setQuantity] = useState(1);
 
-  // console.log(foodCollection[foodIndex].quantity === 3);
+  const dispatch = useDispatch();
 
   const handleIncrease = () => {
     if (quantity < 15) {
       setQuantity(quantity + 1);
+      dispatch(incQuantity(item));
     }
   };
   const handleDecrease = () => {
     if (quantity > 1) {
       setQuantity(quantity - 1);
+      dispatch(decQuantity(item));
     }
+  };
+
+  const handleDelete = () => {
+    dispatch(deleteItem(item));
   };
 
   return (
     <TableRow className="cartItem__row">
       <TableCell component="th" scope="row">
-        <img width="20%" className="cartItem__img" src={item.image} alt="" />
+        <img
+          width="20%"
+          className="cartItem__img"
+          src={`http://localhost:5000/${item.foodImage}`}
+          alt=""
+        />
       </TableCell>
       <TableCell width="35%" align="center">
         <span className="cartItem__heading">{item.title}</span>
@@ -63,10 +69,10 @@ const CartItem = ({ item }) => {
         </span>
       </TableCell>
       <TableCell align="center">
-        <strong className="text-secondary">$500</strong>
+        <strong className="text-secondary">${quantity * item.price}</strong>
       </TableCell>
       <TableCell align="center" className="cartItem__delete">
-        <IconButton onClick={() => {}}>
+        <IconButton onClick={handleDelete}>
           <DeleteIcon className="deleteBtn" />
         </IconButton>
       </TableCell>

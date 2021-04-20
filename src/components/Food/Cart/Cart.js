@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Button,
   Grid,
@@ -16,12 +16,10 @@ import {
   withStyles,
 } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Navbar from '../../Home/Navbar/Navbar';
 import CartItem from './CartItem/CartItem';
-import image1 from '../../../image/header/header_1.jpg';
-import image2 from '../../../image/header/header_2.jpg';
-import image3 from '../../../image/header/header_3.jpg';
 import './Cart.css';
 
 const Cart = () => {
@@ -49,52 +47,20 @@ const Cart = () => {
     },
   }))(TableRow);
 
-  // NOTE: OLD CODE
-  const data = [
-    {
-      id: 1,
-      image: image1,
-      price: 250,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 2,
-      image: image2,
-      price: 150,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 3,
-      image: image3,
-      price: 50,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 4,
-      image: image1,
-      price: 50,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-  ];
+  const [foodData, setFoodData] = useState([]);
 
-  const prices = [];
+  const foodCart = useSelector((state) => state.foodCart);
 
-  const total = prices.reduce((a, b) => {
-    return a + b;
-  }, 0);
+  useEffect(() => {
+    setFoodData(foodCart);
+  }, [foodCart]);
+
+  const total = foodData
+    .map((food) => food.quantity * food.price)
+    .reduce((a, b) => a + b, 0);
+
   const tax = parseFloat((total * 0.08).toFixed(2));
 
-  const handleUpdateCart = () => {
-    console.log(total, prices);
-  };
   return (
     <ThemeProvider theme={themeColor}>
       <Navbar itemColor="black" />
@@ -121,8 +87,8 @@ const Cart = () => {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {data.map((item) => (
-                    <CartItem item={item} key={item.id} />
+                  {foodData.map((item) => (
+                    <CartItem item={item} key={item._id} />
                   ))}
                 </TableBody>
               </Table>
@@ -156,7 +122,7 @@ const Cart = () => {
                         <strong>Subtotal:</strong>
                       </StyledTableCell>
                       <StyledTableCell component="td" scope="row">
-                        2000
+                        {total}
                       </StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow>
@@ -164,7 +130,7 @@ const Cart = () => {
                         <strong>State Tax:</strong>
                       </StyledTableCell>
                       <StyledTableCell component="td" scope="row">
-                        50
+                        {tax}
                       </StyledTableCell>
                     </StyledTableRow>
                     <StyledTableRow>
@@ -172,7 +138,7 @@ const Cart = () => {
                         <strong>Total:</strong>
                       </StyledTableCell>
                       <StyledTableCell component="td" scope="row">
-                        2050
+                        {total + tax}
                       </StyledTableCell>
                     </StyledTableRow>
                   </TableBody>

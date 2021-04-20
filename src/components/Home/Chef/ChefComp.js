@@ -37,8 +37,6 @@ export default class ChefComp extends Component {
           {sliderData.map((item) => (
             <ChefCompItem key={item.id} item={item} />
           ))}
-          {/* <ChefCompItem item={sliderData[0].id} />
-          <ChefCompItem item={sliderData[1].id} /> */}
         </Slider>
       </div>
     );

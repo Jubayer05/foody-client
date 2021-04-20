@@ -1,0 +1,7 @@
+.copyrightLink {
+  color: gray;
+}
+
+.copyrightLink:hover {
+  text-decoration: underline;
+}

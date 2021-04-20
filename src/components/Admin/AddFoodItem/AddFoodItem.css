@@ -1,3 +1,8 @@
+.addFoodItem__heading {
+  font-size: 30px;
+  text-align: center;
+}
+
 input[type='file'] {
   display: none;
 }
@@ -20,10 +25,12 @@ input[type='file'] {
 }
 
 .upload__input {
+  width: 100%;
   padding: 15px;
 }
 
 .addFoodItem {
+  width: 100%;
   margin-top: 15px !important;
 }
 

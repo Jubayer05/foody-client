@@ -22,9 +22,7 @@ const LoginEmail = () => {
   return (
     <ThemeProvider theme={theme}>
       <Paper className="loginEmail">
-        <h4 className="">
-          {loginAccount ? 'Create a new account' : 'Login Your Account'}
-        </h4>
+        <h4>{loginAccount ? 'Create a new account' : 'Login Your Account'}</h4>
         <form>
           {loginAccount && (
             <>

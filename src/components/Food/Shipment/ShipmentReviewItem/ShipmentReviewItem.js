@@ -1,5 +1,4 @@
 import React from 'react';
-// import image1 from '../../../../image';
 import './ShipmentReviewItem.css';
 
 const ShipmentReviewItem = ({ item }) => {
@@ -12,7 +11,11 @@ const ShipmentReviewItem = ({ item }) => {
           <col span="1" style={{ width: '25%' }} />
         </colgroup>
         <td>
-          <img className="delivery__review--img" src={item.image} alt="" />
+          <img
+            className="delivery__review--img"
+            src={`http://localhost:5000/${item.foodImage}`}
+            alt=""
+          />
         </td>
         <td>
           <p className="delivery__review--title text-bold">{item.title}</p>
@@ -21,8 +24,10 @@ const ShipmentReviewItem = ({ item }) => {
           </p>
         </td>
         <td className="delivery__review--right">
-          <h6>${item.price} * 1</h6>
-          <h6>${item.price * 1}</h6>
+          <h6>
+            ${item.price} * {item.quantity}
+          </h6>
+          <h6>${item.price * item.quantity}</h6>
         </td>
       </table>
     </div>

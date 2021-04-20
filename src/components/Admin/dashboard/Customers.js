@@ -54,10 +54,10 @@ const rows = [
   ),
 ];
 
-export default function Orders() {
+export default function Customers() {
   return (
     <div>
-      <Title>Recent Orders</Title>
+      <Title>Last Ten Customers</Title>
       <Table size="small">
         <TableHead>
           <TableRow>

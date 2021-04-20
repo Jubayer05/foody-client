@@ -1,17 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import './ShoppingCartItem.css';
+import { addFoodToCart } from '../../../../actions/foodCartAction';
 
-const ShoppingCartItem = ({ item, handleFoodData }) => {
+const ShoppingCartItem = ({ item }) => {
+  const dispatch = useDispatch();
+
+  const handleFoodData = () => {
+    dispatch(addFoodToCart(item));
+    // console.log(foodCart);
+  };
   return (
-    <div className="shoppingCart__item p-3 mt-5">
+    <div className="shoppingCart__item">
       <img
         className="shoppingCart__image"
-        src="https://i.ibb.co/0BKwnR8/Chef-1.png"
+        src={`http://localhost:5000/${item.foodImage}`}
         alt=""
       />
       <br />
-      <h4 className="pt-2">
+      <h4>
         <Link
           className="shoppingCartItem__heading"
           to={`/foodDetail/${item.id}`}
@@ -19,12 +27,12 @@ const ShoppingCartItem = ({ item, handleFoodData }) => {
           {item.title}
         </Link>
       </h4>
-      <p>{item.detail}</p>
+      <p>{item.description}</p>
       {/* <SimpleSnackbar item={item}/> */}
       <button
         type="button"
         className="primary-btn shoppingCartItem__btn"
-        onClick={() => handleFoodData(item)}
+        onClick={handleFoodData}
       >
         add to cart
       </button>

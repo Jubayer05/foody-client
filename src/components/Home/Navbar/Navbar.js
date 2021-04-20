@@ -4,12 +4,16 @@ import React from 'react';
 import ShoppingCartOutlinedIcon from '@material-ui/icons/ShoppingCartOutlined';
 import { Link, useHistory } from 'react-router-dom';
 import { Badge, IconButton } from '@material-ui/core';
+import { useSelector } from 'react-redux';
 
 import logo from '../../../image/logos/logo-brand.png';
 import './Navbar.css';
 
 const Navbar = ({ itemColor }) => {
   const history = useHistory();
+
+  const foodCartData = useSelector((state) => state.foodCart);
+  // const foodCart = useSelector((state) => state.foodCart);
 
   return (
     <div className="navbar">
@@ -40,9 +44,9 @@ const Navbar = ({ itemColor }) => {
         <Link to="/admin" style={{ color: `${itemColor}` }}>
           Admin
         </Link>
-        <Link to="/cart" style={{ color: `${itemColor}` }}>
+        <Link to="/cart">
           <IconButton aria-label="cart">
-            <Badge badgeContent={4} color="secondary">
+            <Badge badgeContent={foodCartData.length} color="secondary">
               <ShoppingCartOutlinedIcon style={{ color: `${itemColor}` }} />
             </Badge>
           </IconButton>
