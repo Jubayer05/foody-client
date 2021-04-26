@@ -5,35 +5,19 @@ import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { Box, Grid } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
 import Navbar from '../../Home/Navbar/Navbar';
-// import FoodData from '../../../FakeData/FakeData';
-import image1 from '../../../image/chefs/Chef-2.jpg';
 import './foodDetail.css';
+import { addFoodToCart } from '../../../actions/foodCartAction';
 // import SimpleSnackbar from '../../Utilities/Snackbar/Snackbar';
 
 const FoodDetail = () => {
-  const data = [
-    {
-      id: 1,
-      image: 'http://',
-      price: 50,
-      title: 'This the food heading This the food headingThis the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 2,
-      image: 'http://',
-      price: 50,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-  ];
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.foodItems);
+
   const { id } = useParams();
-  const newId = parseInt(id, 10);
-  const filteredData = data.find((element) => element.id === newId);
+  const filteredData = data.find((element) => element._id === id);
 
   const [itemNum, setItemNum] = useState(1);
   const increaseNum = () => {
@@ -46,14 +30,21 @@ const FoodDetail = () => {
   };
   const price = itemNum * filteredData.price;
 
+  const handleAddToCart = () => {
+    filteredData.quantity = itemNum;
+    dispatch(addFoodToCart(filteredData));
+  };
+
   return (
     <>
       <Navbar itemColor="black" />
       <div className="foodDetail__container">
-        <Grid container spacing={3}>
-          <Grid item md={7} className="foodDetail__content">
+        <Grid container spacing={3} className="foodDetail__gridContainer">
+          <Grid item sm={7} className="foodDetail__content">
             <h2>{filteredData.title}</h2>
-            <p className="foodDetail__description">{filteredData.detail}</p>
+            <p className="foodDetail__description">
+              {filteredData.description}
+            </p>
             <Box display="flex" alignItems="center">
               <h4 className="text-primary foodDetail__price">${price}</h4>
               <span className="foodDetail__itemNum--container">
@@ -67,15 +58,23 @@ const FoodDetail = () => {
               </span>
             </Box>
             {/* <SimpleSnackbar /> */}
-            <button className="foodDetail__btn" type="button">
+            <button
+              onClick={handleAddToCart}
+              className="foodDetail__btn"
+              type="button"
+            >
               Add To Cart
             </button>
             <h1 className="text-primary foodDetail__carousel">
               Here Include Food Carousel
             </h1>
           </Grid>
-          <Grid item md={5}>
-            <img src={image1} className="foodDetail__image" alt="" />
+          <Grid item sm={5}>
+            <img
+              src={`http://localhost:5000/${filteredData.foodImage}`}
+              className="foodDetail__image"
+              alt=""
+            />
           </Grid>
         </Grid>
       </div>

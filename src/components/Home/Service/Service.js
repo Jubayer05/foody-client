@@ -31,8 +31,8 @@ const Services = () => {
     },
   ];
   return (
-    <div id="/service">
-      <h2 className="font-primary">
+    <>
+      <h2 className="home-header font-primary">
         About Our<span className="text-primary"> Service</span>
       </h2>
       <div className="service">
@@ -42,7 +42,7 @@ const Services = () => {
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 

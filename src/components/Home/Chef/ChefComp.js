@@ -18,11 +18,32 @@ const sliderData = [
   { id: 5, image: chef5, name: 'Alberta Park' },
 ];
 
+const slidesToShow = 3;
 export default class ChefComp extends Component {
   render() {
     const settings = {
       infinite: true,
-      slidesToShow: 3,
+      responsive: [
+        {
+          breakpoint: 3024,
+          settings: {
+            slidesToShow: 3,
+          },
+        },
+        {
+          breakpoint: 670,
+          settings: {
+            slidesToShow: 2,
+            initialSlide: 2,
+          },
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+          },
+        },
+      ],
       slidesToScroll: 1,
       autoplay: true,
       autoplaySpeed: 2000,
@@ -30,7 +51,7 @@ export default class ChefComp extends Component {
     };
     return (
       <div className="container chefComp">
-        <h2 className="font-primary chefComp__heading">
+        <h2 className="font-primary chefComp__heading home-header">
           Our Master <span className="text-primary"> Chefs</span>
         </h2>
         <Slider {...settings}>

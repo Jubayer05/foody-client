@@ -3,14 +3,11 @@ import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './ShoppingCartItem.css';
 import { addFoodToCart } from '../../../../actions/foodCartAction';
+import ConsecutiveSnackbars from '../../../utilities/Snackbar';
 
 const ShoppingCartItem = ({ item }) => {
   const dispatch = useDispatch();
 
-  const handleFoodData = () => {
-    dispatch(addFoodToCart(item));
-    // console.log(foodCart);
-  };
   return (
     <div className="shoppingCart__item">
       <img
@@ -22,20 +19,20 @@ const ShoppingCartItem = ({ item }) => {
       <h4>
         <Link
           className="shoppingCartItem__heading"
-          to={`/foodDetail/${item.id}`}
+          to={`/foodDetail/${item._id}`}
         >
           {item.title}
         </Link>
       </h4>
-      <p>{item.description}</p>
-      {/* <SimpleSnackbar item={item}/> */}
-      <button
-        type="button"
-        className="primary-btn shoppingCartItem__btn"
-        onClick={handleFoodData}
-      >
-        add to cart
-      </button>
+      <p style={{ marginTop: '-25px' }} className="shoppingCart__description">
+        {item.description}
+      </p>
+      <p className="shoppingCartItem__price">
+        <span className="item__price">${item.price}</span>
+        <span className="shoppingCartItem__delivery">free delivery</span>
+      </p>
+
+      <ConsecutiveSnackbars item={item} />
     </div>
   );
 };

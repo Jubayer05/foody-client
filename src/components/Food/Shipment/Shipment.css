@@ -18,6 +18,18 @@
   width: 450px;
 }
 
+@media (max-width: 500px) {
+  .delivery__content {
+    width: 350px;
+  }
+}
+
+@media (max-width: 380px) {
+  .delivery__content {
+    width: 300px;
+  }
+}
+
 .delivery__review {
   width: 300px;
   text-align: left;
@@ -55,4 +67,8 @@
 
 .placeOrder__btn {
   margin-top: 15px !important;
+}
+
+.shipment__alert {
+  margin: 20px 0;
 }

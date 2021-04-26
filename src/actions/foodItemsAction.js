@@ -10,6 +10,25 @@ export const getAllFoodItems = () => async (dispatch) => {
   }
 };
 
+export const getAllOrder = () => async (dispatch) => {
+  try {
+    const { data } = await api.fetchOrder();
+    dispatch({ type: 'FETCH_ORDER', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getAllUser = () => async (dispatch) => {
+  try {
+    const { data } = await api.getAllUser();
+
+    dispatch({ type: 'GET_USER', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const postFoodItems = (newFoodItem) => async (dispatch) => {
   try {
     const { data } = await api.postFoodItem(newFoodItem);

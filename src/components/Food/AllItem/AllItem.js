@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import image1 from '../../../image/header/header_1.jpg';
@@ -15,50 +16,7 @@ import './AllItem.css';
 // import BackToTop from '../../Utilities/BactToTop/BackToTop';
 
 const AllItem = () => {
-  const ShoppingCard = [
-    {
-      id: 1,
-      image: image1,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 2,
-      image: image2,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 3,
-      image: image3,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 4,
-      image: image4,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 5,
-      image: image5,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-    {
-      id: 6,
-      image: image3,
-      title: 'This the food heading',
-      detail:
-        ' Lorem ipsum, dolor sit amet consectetur adipisicing elit. Suscipit tempora ex inventore iste corporis! Optio unde temporibus similique error consequatur?',
-    },
-  ];
+  const ShoppingCard = useSelector((state) => state.foodItems);
   const history = useHistory();
   return (
     <>
@@ -70,7 +28,7 @@ const AllItem = () => {
           src={logo}
           alt=""
         />
-        <h2 className="font-primary">
+        <h2 className="font-primary allFood__heading">
           All <span className="text-primary">Foods </span>here
         </h2>
         <div className="allItem__container">

@@ -1,12 +1,33 @@
-/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-undef */
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Button, Checkbox, FormControlLabel, Paper } from '@material-ui/core';
+import firebase from 'firebase';
+import {
+  Button,
+  Checkbox,
+  FormControl,
+  FormControlLabel,
+  IconButton,
+  Input,
+  InputAdornment,
+  InputLabel,
+  makeStyles,
+  Paper,
+} from '@material-ui/core';
+import { useHistory, useLocation } from 'react-router-dom';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import clsx from 'clsx';
+import { useDispatch } from 'react-redux';
+import { Alert } from '@material-ui/lab';
 import './LoginEmail.css';
+import { signin, signup } from '../../../actions/auth';
+import { findAdmin } from '../../../actions/adminAction';
 
-const theme = createMuiTheme({
+const materialTheme = createMuiTheme({
   palette: {
     primary: {
       main: '#ff4081',
@@ -17,60 +38,198 @@ const theme = createMuiTheme({
   },
 });
 
+const useStyles = makeStyles((theme) => ({
+  margin: {
+    marginTop: theme.spacing(1),
+  },
+}));
+
+const initialState = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+  confirmPassword: '',
+};
+
 const LoginEmail = () => {
-  const [loginAccount, setLoginAccount] = useState(false);
+  const classes = useStyles();
+  const [userData, setUserData] = useState(initialState);
+  const [message, setMessage] = useState(null);
+  const [haveAccount, setHaveAccount] = useState(true);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const location = useLocation();
+  const auth = sessionStorage.getItem('profile');
+
+  const { from } = location.state || { from: { pathname: '/' } };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(null);
+    }, 3500);
+  }, [message]);
+
+  // NOTE: PASSWORD
+  const [values, setValues] = useState({
+    password: '',
+    showPassword: false,
+  });
+
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+
+  const handleClickShowPassword = () => {
+    setValues({ ...values, showPassword: !values.showPassword });
+  };
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
+  };
+
+  // NOTE: CREATE USER FIREBASE
+  const handleCreateUser = () => {
+    if (userData.password === userData.confirmPassword) {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(userData.email, userData.password)
+        .then((userCredential) => {
+          const { user } = userCredential;
+          setMessage({
+            message: 'Account created successfully',
+            type: 'success',
+          });
+          dispatch(signup(userData));
+          history.replace(from);
+        })
+        .catch((error) => {
+          const errorMessage = error.message;
+          setMessage({ message: errorMessage, type: 'error' });
+        });
+    } else {
+      alert("Password Doesn't match");
+    }
+  };
+
+  // NOTE: LOGIN USER FIREBASE
+  const handleLoginAccount = () => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(userData.email, userData.password)
+      .then((userCredential) => {
+        const { user } = userCredential;
+        setMessage({
+          message: 'User logged in successfully',
+          type: 'success',
+        });
+        dispatch(signin(userData));
+        dispatch(findAdmin({ email: userData.email }));
+        history.replace(from);
+      })
+      .catch((error) => {
+        const errorMessage = error.message;
+        setMessage({ message: errorMessage, type: 'error' });
+      });
+  };
+
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={materialTheme}>
       <Paper className="loginEmail">
-        <h4>{loginAccount ? 'Create a new account' : 'Login Your Account'}</h4>
+        <h4 className="login__heading">
+          {!haveAccount ? 'Create a new account' : 'Login Your Account'}
+        </h4>
+        {message && message.type === 'error' ? (
+          <Alert severity="error">{message.message}</Alert>
+        ) : message && message.type === 'success' ? (
+          <Alert severity="success">{message.message}</Alert>
+        ) : (
+          ''
+        )}
         <form>
-          {loginAccount && (
+          {!haveAccount && (
             <>
               <TextField
+                onChange={(e) =>
+                  setUserData({ ...userData, firstName: e.target.value })
+                }
                 className="login__input"
                 name="firstName"
                 label="First Name"
                 color="secondary"
-                InputLabelProps={{ style: { color: '#000' } }}
+                style={{ color: '#000' }}
               />
 
               <TextField
+                onChange={(e) =>
+                  setUserData({ ...userData, lastName: e.target.value })
+                }
                 className="login__input"
                 name="lastName"
                 label="Last Name"
                 color="secondary"
-                InputLabelProps={{ style: { color: '#000' } }}
+                style={{ color: '#000' }}
               />
             </>
           )}
 
           <TextField
+            onChange={(e) =>
+              setUserData({ ...userData, email: e.target.value })
+            }
             className="login__input"
             name="email"
             label="Username or Email"
             color="secondary"
-            InputLabelProps={{ style: { color: '#000' } }}
+            style={{ color: '#000' }}
           />
 
-          <TextField
-            className="login__input"
-            name="password"
-            label="Password"
-            color="secondary"
-            InputLabelProps={{ style: { color: '#000' } }}
-          />
+          <FormControl fullWidth className={clsx(classes.margin)}>
+            <InputLabel
+              style={{ color: '#000' }}
+              htmlFor="standard-adornment-password"
+            >
+              Password
+            </InputLabel>
+            <Input
+              color="secondary"
+              style={{ color: '#000' }}
+              id="standard-adornment-password"
+              type={values.showPassword ? 'text' : 'password'}
+              value={values.password}
+              onChange={handleChange('password')}
+              onBlur={(e) =>
+                setUserData({ ...userData, password: e.target.value })
+              }
+              endAdornment={
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              }
+            />
+          </FormControl>
 
-          {loginAccount && (
+          {!haveAccount && (
             <TextField
+              onChange={(e) =>
+                setUserData({ ...userData, confirmPassword: e.target.value })
+              }
+              type="password"
               className="login__input"
               name="confirmPassword"
               label="Confirm Password"
               color="secondary"
-              InputLabelProps={{ style: { color: '#000' } }}
+              style={{ color: '#000' }}
             />
           )}
 
-          {!loginAccount && (
+          {haveAccount && (
             <p className="forgottenPass">
               <FormControlLabel
                 className="mt-2"
@@ -82,28 +241,29 @@ const LoginEmail = () => {
           )}
 
           <Button
-            onClick={() => {}}
+            onClick={haveAccount ? handleLoginAccount : handleCreateUser}
             id="createUser"
             fullWidth
             className="login__btn"
             variant="contained"
             color="primary"
           >
-            {loginAccount ? 'Create an account' : 'Login'}
+            {!haveAccount ? 'Create an account' : 'Login'}
           </Button>
 
           <p className="login__text">
-            {loginAccount
+            {haveAccount
               ? 'Already have an account?'
               : "Don't have an account?"}
             &nbsp;
             <span
               className="login__link"
               onClick={() => {
-                setLoginAccount(!loginAccount);
+                setHaveAccount(!haveAccount);
               }}
+              onKeyDown={() => {}}
             >
-              {loginAccount ? 'Create an account' : 'Login'}
+              {haveAccount ? 'Create an account' : 'Login'}
             </span>
           </p>
         </form>

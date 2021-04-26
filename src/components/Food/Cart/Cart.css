@@ -56,3 +56,10 @@ td {
   width: 100%;
   margin-top: 24px !important;
 }
+
+@media (max-width: 950px) {
+  .cart__right {
+    width: 70%;
+    margin: auto !important;
+  }
+}

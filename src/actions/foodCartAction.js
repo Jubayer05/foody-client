@@ -1,4 +1,6 @@
 /* eslint-disable no-console */
+import * as api from '../api';
+
 export const addFoodToCart = (food) => async (dispatch) => {
   try {
     const data = await food;
@@ -30,6 +32,15 @@ export const deleteItem = (food) => async (dispatch) => {
   try {
     const data = await food;
     dispatch({ type: 'DELETE_ITEM', payload: data });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const orderFood = (order) => async (dispatch) => {
+  try {
+    const { data } = await api.orderFood(order);
+    dispatch({ type: 'PLACE_ORDER', payload: data });
   } catch (error) {
     console.log(error);
   }

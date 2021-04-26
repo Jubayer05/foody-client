@@ -1,3 +1,7 @@
+.login__heading {
+  margin-bottom: 10px;
+}
+
 .loginEmail {
   max-width: 500px;
   margin: auto;
@@ -33,4 +37,12 @@
   color: #ff4081;
   cursor: pointer;
   text-decoration: underline;
+}
+
+.login__password {
+  margin-top: 13px !important;
+}
+
+.MuiFormLabel-root {
+  color: black !important;
 }

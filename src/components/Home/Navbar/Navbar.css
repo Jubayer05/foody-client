@@ -9,6 +9,7 @@
 }
 
 .navbar__logo {
+  /* text-align: left !important; */
   flex: 1;
 }
 
@@ -20,6 +21,30 @@
 .navbar__link a {
   margin: 0 10px;
   font-weight: 600;
+}
+
+@media (max-width: 650px) {
+  .logo {
+    width: 80px;
+  }
+  .navbar__link a {
+    margin: 0 5px;
+  }
+}
+
+@media only screen and (max-width: 450px) {
+  .navbar {
+    display: block;
+  }
+  .navbar__logo {
+    margin-top: -50px;
+    text-align: center;
+    transform: translateY(50px);
+  }
+  .navbar__link {
+    text-align: center;
+    transform: translateY(40px);
+  }
 }
 
 .navbar__link a:hover {

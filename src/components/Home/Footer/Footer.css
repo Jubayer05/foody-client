@@ -48,6 +48,7 @@
   top: 3px;
   left: 36px;
 }
+
 .footer__content {
   max-width: 660px;
   margin: auto;
@@ -91,4 +92,38 @@
 }
 .footer ::placeholder {
   color: #fff;
+}
+
+@media (max-width: 500px) {
+  .footer {
+    padding: 10px;
+  }
+  .underLine {
+    max-width: 220px;
+  }
+  .underLine::after {
+    width: 120%;
+    left: -22px;
+  }
+  .underLine::before {
+    width: 80%;
+    top: 5px;
+    left: 22px;
+  }
+  .footer__content {
+    display: block;
+  }
+  .footer__content--1,
+  .footer__content--2 {
+    text-align: center;
+  }
+
+  .footer__content--2 {
+    margin-top: 40px;
+  }
+
+  .footer__input--container {
+    width: 60%;
+    margin: 5px auto 20px;
+  }
 }

@@ -13,12 +13,20 @@ import AddAdmin from './components/Admin/AddAdmin/AddAdmin';
 import OrderList from './components/Admin/OrderList/OrderList';
 import AddFoodItem from './components/Admin/AddFoodItem/AddFoodItem';
 import CustomerList from './components/Admin/CustomerList/CustomerList';
-import { getAllFoodItems } from './actions/foodItemsAction';
+import {
+  getAllFoodItems,
+  getAllOrder,
+  getAllUser,
+} from './actions/foodItemsAction';
+import PrivateRoute from './components/Login/Privateroute/PrivateRoute';
+import NotAdmin from './components/Admin/NotAdmin/NotAdmin';
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getAllFoodItems());
+    dispatch(getAllOrder());
+    dispatch(getAllUser());
   }, [dispatch]);
 
   return (
@@ -27,7 +35,9 @@ const App = () => {
         <Route path="/seeAllItem" component={AllItem} />
         <Route path="/foodDetail/:id" component={FoodDetail} />
         <Route path="/cart" component={Cart} />
-        <Route path="/shipment" component={Shipment} />
+        <PrivateRoute path="/shipment">
+          <Shipment />
+        </PrivateRoute>
         <Route path="/login" component={Login} />
         <Route path="/admin" component={Admin} />
         <Route path="/adminPage/dashboard" component={Admin} />
@@ -35,6 +45,7 @@ const App = () => {
         <Route path="/adminPage/addAdmin" component={AddAdmin} />
         <Route path="/adminPage/addFoodItem" component={AddFoodItem} />
         <Route path="/adminPage/customerList" component={CustomerList} />
+        <Route path="/notAdmin" component={NotAdmin} />
         <Route path="/" component={Home} />
       </Switch>
     </Router>

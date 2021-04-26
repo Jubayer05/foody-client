@@ -1,0 +1,18 @@
+.notAdmin__container {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notAdmin__paper {
+  margin-top: 70px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.notAdmin__paper h2 {
+  margin-bottom: 50px;
+}

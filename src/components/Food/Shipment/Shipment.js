@@ -1,3 +1,5 @@
+/* eslint-disable import/no-named-as-default */
+/* eslint-disable import/no-named-as-default-member */
 import React, { useEffect, useState } from 'react';
 import {
   Button,
@@ -6,17 +8,34 @@ import {
   Grid,
   Paper,
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { Alert } from '@material-ui/lab';
 import './Shipment.css';
-import image1 from '../../../image/header/header_1.jpg';
-import image2 from '../../../image/header/header_2.jpg';
-import image3 from '../../../image/header/header_3.jpg';
 import ShipmentReviewItem from './ShipmentReviewItem/ShipmentReviewItem';
+import { orderFood } from '../../../actions/foodCartAction';
 import Navbar from '../../Home/Navbar/Navbar';
 
+const initialState = {
+  name: '',
+  email: '',
+  contacts: null,
+  foodOrdered: [],
+  roadNo: '',
+};
 const Shipment = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
   const [foodData, setFoodData] = useState([]);
+  const [message, setMessage] = useState(null);
+  const [orderData, setOrderData] = useState(initialState);
+  // eslint-disable-next-line no-undef
+  const userData = JSON.parse(sessionStorage.getItem('profile'))?.result;
+  useEffect(() => {
+    setTimeout(() => {
+      setMessage(null);
+    }, 2500);
+  }, [message]);
 
   const themeColor = createMuiTheme({
     palette: {
@@ -38,7 +57,33 @@ const Shipment = () => {
 
   const tax = parseFloat((total * 0.08).toFixed(2));
 
-  const handleSubmit = () => {};
+  const handleSubmit = () => {
+    if (orderData.contacts && orderData.roadNo) {
+      setOrderData({
+        ...orderData,
+        name: userData.name,
+        email: userData.email,
+        foodOrdered: foodData,
+      });
+      setMessage({
+        status: 'success',
+        message: 'Data saved for placing order😅',
+      });
+    } else {
+      setMessage({ status: 'error', message: 'Please fill up the form' });
+    }
+  };
+
+  const handlePlaceOrder = () => {
+    if (orderData?.foodOrdered.length > 0) {
+      dispatch(orderFood(orderData));
+      setOrderData(initialState);
+      alert('Your order has been successfully placed. Keep shopping😃😃');
+      history.push('/seeAllItem');
+    } else {
+      alert('Please fill up the form and press save and continue button');
+    }
+  };
 
   return (
     <>
@@ -47,11 +92,20 @@ const Shipment = () => {
         <Grid container className="container shipment">
           <Grid item md={5} className="delivery__content">
             <h4 className="delivery__details">Your Delivery Details</h4>
+            {message && (
+              <Alert className="shipment__alert" severity={`${message.status}`}>
+                {message.message}
+              </Alert>
+            )}
             <input
               type="text"
               className="shipment__input"
               name="name"
+              defaultValue={userData.name}
               placeholder="Your Name"
+              onChange={(e) =>
+                setOrderData({ ...orderData, name: e.target.value })
+              }
             />
 
             <input
@@ -67,6 +121,9 @@ const Shipment = () => {
               className="shipment__input"
               name="contact"
               placeholder="Contact Info"
+              onChange={(e) =>
+                setOrderData({ ...orderData, contacts: e.target.value })
+              }
             />
 
             <input
@@ -74,6 +131,9 @@ const Shipment = () => {
               className="shipment__input"
               name="address"
               placeholder="Road No or Address"
+              onChange={(e) =>
+                setOrderData({ ...orderData, roadNo: e.target.value })
+              }
             />
 
             <input
@@ -84,7 +144,7 @@ const Shipment = () => {
             />
 
             <Button
-              onClick={handleSubmit(() => {})}
+              onClick={handleSubmit}
               className="shipment__btn"
               style={{ outline: 'none' }}
               variant="contained"
@@ -111,35 +171,36 @@ const Shipment = () => {
 
               <Paper className="cart-box">
                 <table className="cart-table">
-                  <tr className="cart__border">
-                    <th>Subtotal * {foodData.length} items</th>
-                    <td className="text-right">${total}</td>
-                  </tr>
-                  <tr className="cart__border">
-                    <th>State Tax</th>
-                    <td className="text-right">${tax}</td>
-                  </tr>
-                  <tr className="cart__border">
-                    <th>Delivery Fee</th>
-                    <td className="text-right">$0</td>
-                  </tr>
-                  <tr className="cart__border">
-                    <th>Total</th>
-                    <td className="text-right">${total + tax}</td>
-                  </tr>
+                  <tbody>
+                    <tr className="cart__border">
+                      <th>Subtotal * {foodData.length} items</th>
+                      <td className="text-right">${total}</td>
+                    </tr>
+                    <tr className="cart__border">
+                      <th>State Tax</th>
+                      <td className="text-right">${tax}</td>
+                    </tr>
+                    <tr className="cart__border">
+                      <th>Delivery Fee</th>
+                      <td className="text-right">$0</td>
+                    </tr>
+                    <tr className="cart__border">
+                      <th>Total</th>
+                      <td className="text-right">${total + tax}</td>
+                    </tr>
+                  </tbody>
                 </table>
-                <Link to="/shipment" className="cart-link">
-                  <Button
-                    onClick={() => {}}
-                    className="placeOrder__btn"
-                    style={{ outline: 'none' }}
-                    variant="contained"
-                    fullWidth
-                    color="primary"
-                  >
-                    Place Order
-                  </Button>
-                </Link>
+
+                <Button
+                  onClick={handlePlaceOrder}
+                  className="placeOrder__btn"
+                  style={{ outline: 'none' }}
+                  variant="contained"
+                  fullWidth
+                  color="primary"
+                >
+                  Place Order
+                </Button>
               </Paper>
             </div>
           </Grid>

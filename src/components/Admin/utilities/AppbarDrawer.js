@@ -91,7 +91,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AppbarDrawer = () => {
+const AppbarDrawer = ({ name }) => {
+  // eslint-disable-next-line no-undef
+  const adminData = JSON.parse(sessionStorage.getItem('admin'));
   const classes = useStyles();
   const [open, setOpen] = React.useState(true);
   const handleDrawerOpen = () => {
@@ -126,9 +128,9 @@ const AppbarDrawer = () => {
             noWrap
             className={classes.title}
           >
-            Dashboard
+            {name}
           </Typography>
-          <Typography>Admin Jubayer</Typography>
+          <Typography>Admin {adminData?.name}</Typography>
         </Toolbar>
       </AppBar>
       <Drawer

@@ -1,6 +1,7 @@
 /* Background Image */
 .chefCompItem {
   width: 90%;
+  margin: auto;
   height: 300px;
   background-size: 100% 100%;
   -moz-transition: all 0.5s;
@@ -62,4 +63,17 @@
 .chefCompItem:hover .chefCompItem__name {
   opacity: 1;
   transform: translateY(165px) translateX(40px);
+}
+
+@media (max-width: 500px) {
+  .chefCompItem__name {
+    font-size: 18px;
+    transform: translateY(150px) translateX(10px);
+    transition: all 0.3s 0.7s;
+  }
+
+  .chefCompItem:hover .chefCompItem__name {
+    opacity: 1;
+    transform: translateY(80px) translateX(10px);
+  }
 }

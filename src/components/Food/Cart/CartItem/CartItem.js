@@ -12,21 +12,13 @@ import {
 } from '../../../../actions/foodCartAction';
 
 const CartItem = ({ item }) => {
-  const [quantity, setQuantity] = useState(1);
-
   const dispatch = useDispatch();
 
   const handleIncrease = () => {
-    if (quantity < 15) {
-      setQuantity(quantity + 1);
-      dispatch(incQuantity(item));
-    }
+    dispatch(incQuantity(item));
   };
   const handleDecrease = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-      dispatch(decQuantity(item));
-    }
+    dispatch(decQuantity(item));
   };
 
   const handleDelete = () => {
@@ -51,7 +43,7 @@ const CartItem = ({ item }) => {
       </TableCell>
       <TableCell align="center">
         <span display="flex" className="cartItem__quantity">
-          <span className="cartItem__iteration--num">{quantity}</span>
+          <span className="cartItem__iteration--num">{item.quantity}</span>
           <span className="cartItem__iteration--box">
             <FontAwesomeIcon
               onClick={handleIncrease}
@@ -69,7 +61,9 @@ const CartItem = ({ item }) => {
         </span>
       </TableCell>
       <TableCell align="center">
-        <strong className="text-secondary">${quantity * item.price}</strong>
+        <strong className="text-secondary">
+          ${item.quantity * item.price}
+        </strong>
       </TableCell>
       <TableCell align="center" className="cartItem__delete">
         <IconButton onClick={handleDelete}>

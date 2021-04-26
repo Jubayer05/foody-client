@@ -34,8 +34,17 @@ Link {
   background-color: #a61212;
   color: #fff;
 }
-/* 
-TODO: Heading: font-family: 'Dancing Script', cursive;
-TODO: Body: font-family: 'Lato', sans-serif;
-TODO: Heading-sub: font-family: 'PT Sans Narrow', sans-serif;
-*/
+
+@media (max-width: 768px) {
+  .home-header {
+    font-size: 50px;
+  }
+}
+@media (max-width: 500px) {
+  .home-header {
+    font-size: 37px;
+  }
+  .primary-btn {
+    padding: 5px 15px;
+  }
+}
